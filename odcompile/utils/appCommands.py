@@ -13,7 +13,7 @@ from odcompile.utils.relay import processCode
 async def compileMessage(interaction: discord.Interaction, compile_message: discord.Message):
     cog = interaction.client.get_cog("ODCompile")
 
-    cleaned_input = splitArgs(args=compile_message.content)
+    cleaned_input = splitArgs(args=compile_message.content, strict_args=True)
 
     code = cleanupCode(cleaned_input["code"])
     if code is None:

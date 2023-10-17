@@ -30,7 +30,7 @@ def cleanupCode(content: str) -> str | None:
     return None
 
 
-def splitArgs(args: str, delimiter: str = "`") -> dict:
+def splitArgs(args: str, delimiter: str = "`", strict_args: bool = False) -> dict:
     """
     Take a list of arguments and split them based on the delimiter.
 
@@ -41,7 +41,11 @@ def splitArgs(args: str, delimiter: str = "`") -> dict:
     args = args.split(sep=delimiter, maxsplit=1)
     args_dict["code"] = args[1]
     args_dict["args"] = [arg.replace("\n", "") for arg in args[0].split(" ")]
+    log.error(args_dict["args"])
     args_dict["parsed"] = True
+
+    if strict_args:
+        args_dict["args"] = [arg for arg in args_dict["args"] if arg.startswith("--")]
 
     if "--no-parsing" in args_dict["args"]:
         args_dict["parsed"] = False
